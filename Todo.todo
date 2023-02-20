@@ -1,0 +1,55 @@
+{
+  "todotree": {
+    "tree": [
+      {
+        "key": 1676858446141,
+        "children": [
+          {
+            "key": 1676858476145,
+            "children": [],
+            "todo": {
+              "content": "Make Jump currency",
+              "id": 1676858476145,
+              "level": "secondary",
+              "done": false,
+              "start": 1676858476145
+            }
+          },
+          {
+            "key": 1676858490792,
+            "children": [],
+            "todo": {
+              "content": "Add X2",
+              "id": 1676858490792,
+              "level": "secondary",
+              "done": false,
+              "start": 1676858490792
+            }
+          }
+        ],
+        "todo": {
+          "content": "Add Leaderstats",
+          "id": 1676858446141,
+          "level": "warning",
+          "done": false,
+          "start": 1676858446141,
+          "focus": false,
+          "end": 1676858459396
+        }
+      }
+    ],
+    "expandKeys": [
+      1676858446141
+    ],
+    "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
+    "add_mode": "bottom",
+    "virtual": false,
+    "showLine": false,
+    "playFontSize": 24,
+    "title": "Todo",
+    "autoSort": false,
+    "showEndTime": false,
+    "lang": "en",
+    "version": "1676858498238"
+  }
+}
