@@ -11,10 +11,8 @@
               "content": "Make Jump currency",
               "id": 1676858476145,
               "level": "secondary",
-              "done": true,
-              "start": 1676858476145,
-              "focus": false,
-              "end": 1676858839928
+              "done": false,
+              "start": 1676858476145
             }
           },
           {
@@ -24,10 +22,8 @@
               "content": "Add X2",
               "id": 1676858490792,
               "level": "secondary",
-              "done": true,
-              "start": 1676858490792,
-              "focus": false,
-              "end": 1676858841882
+              "done": false,
+              "start": 1676858490792
             }
           }
         ],
@@ -35,10 +31,10 @@
           "content": "Add Leaderstats",
           "id": 1676858446141,
           "level": "warning",
-          "done": true,
+          "done": false,
           "start": 1676858446141,
           "focus": false,
-          "end": 1676858845897
+          "end": 1676858459396
         }
       }
     ],
@@ -54,6 +50,6 @@
     "autoSort": false,
     "showEndTime": false,
     "lang": "en",
-    "version": "1676858845973"
+    "version": "1676858498238"
   }
 }
