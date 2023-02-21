@@ -8,8 +8,11 @@
       "$ignoreUnknownInstances": true,
       "Source":{
         "$path": "src/ReplicatedStorage/Source"
-      }
+      },
 
+      "Packages":{
+        "$path": "Packages"
+      }
       
     },
 
