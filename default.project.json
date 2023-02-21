@@ -12,6 +12,12 @@
 
       "Packages":{
         "$path": "Packages"
+      },
+
+      "Monetization":
+      {
+        "$className": "Folder",
+        "$path": "src/ReplicatedStorage/Monetization"
       }
       
     },
@@ -28,7 +34,13 @@
       {
         "$className": "Folder",
         "$path": "src/ServerScriptService/Events"
+      },
+      "MonetizationHandler":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService/MonetizationHandler"
       }
+     
     },
 
     "ServerStorage":{
@@ -60,10 +72,10 @@
     "StarterGui":{
       "$className": "StarterGui",
       "$ignoreUnknownInstances": true,
-      "MainUIScripts":{
+      "ProductUIScripts":{
         "$className": "Folder",
         "$ignoreUnknownInstances": true,
-        "$path": "src/StarterGui/MainUIScripts"
+        "$path": "src/StarterGui/ProductUIScripts"
       }
     }
     
