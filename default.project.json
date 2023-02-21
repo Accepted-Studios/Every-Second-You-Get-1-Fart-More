@@ -23,6 +23,11 @@
       "PlayerData":{
         "$className": "Folder",
         "$path": "src/ServerScriptService/PlayerData"
+      },
+      "Events":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService/Events"
       }
     },
 
