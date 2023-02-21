@@ -1,18 +1,14 @@
-------Services----------
+-----Services----------
 local Players = game:GetService("Players")
 
--------Variables----------
-
+-----Functions-----
 ---*Function To Update Player JumpPower*---
-local function updateJumpPower(character: Instance, FartPower: IntValue)
-	if character then
-		local humanoid = character:WaitForChild("Humanoid")
-		humanoid.JumpPower = FartPower.Value
-	end
+local function UpdateJumpPower(humanoid: Humanoid, FartPower: IntValue)
+	humanoid.JumpPower = FartPower.Value
 end
 
 ---*Function To Add JumpPower*---
-local function addJumpPower(player: Player, FartPower: IntValue, FartRebirths: IntValue, FartIncrease: IntValue)
+local function AddJumpPower(player: Player, FartPower: IntValue, FartRebirths: IntValue, FartIncrease: IntValue)
 	task.spawn(function()
 		while task.wait(1) do
 			--If player is premium, add 2 to JumpPower, else add 1----
@@ -35,7 +31,7 @@ local function addJumpPower(player: Player, FartPower: IntValue, FartRebirths: I
 	end)
 end
 
------** Function To Run When Player Joins **-----
+-----** Main Function To Run When Player Joins **-----
 Players.PlayerAdded:Connect(function(player)
 	local leaderstats = Instance.new("Folder")
 	leaderstats.Name = "leaderstats"
@@ -61,13 +57,18 @@ Players.PlayerAdded:Connect(function(player)
 	FartIncrease.Value = 0
 	FartIncrease.Parent = player
 
-	player.CharacterAdded:Connect(function(character)
-		-----*Whenever a character respwns, Update JumpPower*---
-		updateJumpPower(character, FartPower)
-		FartPower.Changed:Connect(function()
-			updateJumpPower(character, FartPower)
-		end)
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease)
 
-		addJumpPower(player, FartPower, FartRebirths, FartIncrease)
+	player.CharacterAdded:Connect(function(character)
+		local humanoid = character:WaitForChild("Humanoid")
+		if not humanoid then
+			return warn("No Humanoid")
+		end
+
+		-----*Whenever a character respwns, Update JumpPower*---
+		UpdateJumpPower(humanoid, FartPower)
+		FartPower.Changed:Connect(function()
+			UpdateJumpPower(humanoid, FartPower)
+		end)
 	end)
 end)
