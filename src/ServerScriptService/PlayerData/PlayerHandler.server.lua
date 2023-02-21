@@ -47,7 +47,7 @@ Players.PlayerAdded:Connect(function(player)
 	Wins.Value = 0
 	Wins.Parent = leaderstats
 
-	local FartRebirths = Instance.new("IntValue")
+	local FartRebirths = Instance.new("NumberValue")
 	FartRebirths.Name = "FartRebirths"
 	FartRebirths.Value = 0
 	FartRebirths.Parent = leaderstats

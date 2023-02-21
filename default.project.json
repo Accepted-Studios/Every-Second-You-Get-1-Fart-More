@@ -49,6 +49,10 @@
       "DatastoreModules":{
         "$className": "Folder",
         "$path": "src/ServerStorage/DatastoreModules"
+      },
+      "GameModules":{
+        "$className": "Folder",
+        "$path": "src/ServerStorage/GameModules"
       }
 
     },
@@ -72,10 +76,10 @@
     "StarterGui":{
       "$className": "StarterGui",
       "$ignoreUnknownInstances": true,
-      "ProductUIScripts":{
+      "PlayerGuiScripts":{
         "$className": "Folder",
         "$ignoreUnknownInstances": true,
-        "$path": "src/StarterGui/ProductUIScripts"
+        "$path": "src/StarterGui/PlayerGuiScripts"
       }
     }
     

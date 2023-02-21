@@ -28,8 +28,6 @@ DevProducts.ProductsTable = {
 
 	----+ 1 FartPower Every Seconds Table------
 	{ Name = "1 FartIncrease", Value = 1, ProductId = "3", Type = "FartIncrease" },
-	{ Name = "3 FartIncrease", Value = 3, ProductId = "123456789", Type = "FartIncrease" },
-	{ Name = "6 FartIncrease", Value = 6, ProductId = "123456789", Type = "FartIncrease" },
 	{ Name = "10 FartIncrease", Value = 10, ProductId = "123456789", Type = "FartIncrease" },
 
 	----Nuke Table-----
