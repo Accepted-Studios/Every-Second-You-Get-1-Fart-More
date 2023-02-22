@@ -20,9 +20,9 @@ MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 	if not Player then
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
-	print(Player.Name .. " purchased " .. ProductId)
+
 	local ProductInfoTable = DevProducts:GetProductInfoTableByProductId(ProductId)
-	print(ProductInfoTable)
+
 	if ProductInfoTable then
 		-- If ProductInfoTable.Type is Wins
 		if ProductInfoTable.Type == "Wins" then
@@ -32,7 +32,6 @@ MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 
 			---If ProductInfoTable.Type is FartPower
 		elseif ProductInfoTable.Type == "FartPower" then
-			print("FartPower")
 			local FartPower = Player:WaitForChild("leaderstats"):WaitForChild("FartPower")
 			print(ProductInfoTable)
 			FartPower.Value = FartPower.Value + ProductInfoTable.Value
