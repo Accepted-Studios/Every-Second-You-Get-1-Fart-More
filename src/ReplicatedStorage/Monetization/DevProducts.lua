@@ -52,4 +52,12 @@ function DevProducts:GetProductInfoTableByProductId(ProductId)
 	end
 end
 
+------** Write a function that can retrun the productid by type and value
+function DevProducts:GetProductIdByTypeAndValue(Type, Value)
+	for i, Product in pairs(self.ProductsTable) do --- Loop through ProductsTable
+		if Product.Type == Type and Product.Value == Value then --- If ProductId is the same as Product.ProductId
+			return Product.ProductId --- Return ProductId
+		end
+	end
+end
 return DevProducts

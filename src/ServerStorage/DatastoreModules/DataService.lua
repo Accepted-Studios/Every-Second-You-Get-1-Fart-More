@@ -109,8 +109,6 @@ function module.SaveData(player)
 	profile.Data.FartRebirths = FartRebirths.Value
 	profile.Data.FartPower = FartPower.Value
 
-	print(profile.Data)
-
 	------Save Pets Area------------------------
 	-- local Pets = player.Pets
 	-- local Data = player.Data
