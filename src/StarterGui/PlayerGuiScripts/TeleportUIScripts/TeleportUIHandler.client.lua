@@ -15,6 +15,7 @@ local ScrollingFrame = TeleportFrame:WaitForChild("Frame")
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 local CheckWinsFunction = Remotes:WaitForChild("CheckWins")
 
+local RandomColor = Color3.fromHSV(math.random(), 1, 1)
 ----------Functions------
 -----**Click the Exit Button**-----
 ExitBtn.MouseButton1Click:Connect(function()
@@ -26,7 +27,7 @@ local function CheckMoney()
 	for i, Frame in pairs(ScrollingFrame:GetChildren()) do
 		if Frame:IsA("Frame") then
 			----Randomize the Frame's BackgroundColor3----
-			local RandomColor = Color3.fromHSV(math.random(), 1, 1)
+
 			Frame.BackgroundColor3 = RandomColor
 
 			---Check if the Frame has a WinsAmount value----

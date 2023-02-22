@@ -46,7 +46,9 @@ end
 -----**Function To Get ProductInfo by ProductId-----
 function DevProducts:GetProductInfoTableByProductId(ProductId)
 	for i, Product in pairs(self.ProductsTable) do --- Loop through ProductsTable
-		if Product.ProductId == ProductId then --- If ProductId is the same as Product.ProductId
+		print(self.ProductsTable)
+		if tonumber(Product.ProductId) == ProductId then --- If ProductId is the same as Product.ProductId
+			print("Product Found")
 			return Product --- Return Product
 		end
 	end

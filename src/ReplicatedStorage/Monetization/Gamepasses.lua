@@ -26,7 +26,7 @@ Gamepasses.GamepassesTable = {
 function Gamepasses:GetGamepassId(GamepassName)
 	for i, Gamepass in pairs(self.GamepassesTable) do --- Loop through GamepassesTable
 		if CompareWords(Gamepass.Name, GamepassName) then --- If GamepassName is the same as Gamepass.Name
-			return Gamepass.GamepassId --- Return GamepassId
+			return tonumber(Gamepass.GamepassId) --- Return GamepassId
 		end
 	end
 end
