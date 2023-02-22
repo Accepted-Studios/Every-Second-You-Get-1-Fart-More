@@ -6,8 +6,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Player = Players.LocalPlayer
 local character = Player.Character or Player.CharacterAdded:Wait()
 local PlayerGui = Player:WaitForChild("PlayerGui")
-local SoundsFolder = PlayerGui:WaitForChild("Sounds")
-local FartSound = SoundsFolder:WaitForChild("FartSound")
 
 -----Debounces and Events-----
 local isJumping = false
@@ -21,7 +19,6 @@ local function onStateChanged(_oldState, newState)
 		if not isJumping then
 			isJumping = true
 			ParticleEvent:FireServer("Jump")
-			FartSound:Play()
 		end
 	elseif newState == Enum.HumanoidStateType.Landed then
 		if isJumping then
