@@ -16,22 +16,22 @@ DevProducts.__index = DevProducts
 DevProducts.ProductsTable = {
 
 	------Wins Table-----
-	{ Name = "10 Wins", Value = 10, ProductId = "1380843069", Type = "Wins" },
-	{ Name = "100 Wins", Value = 100, ProductId = "1380843214", Type = "Wins" },
-	{ Name = "500 Wins", Value = 500, ProductId = "1380843332", Type = "Wins" },
-	{ Name = "1000 Wins", Value = 1000, ProductId = "1380843435", Type = "Wins" },
+	{ Name = "10 Wins", Value = 10, ProductId = "1380843104", Type = "Wins" },
+	{ Name = "100 Wins", Value = 100, ProductId = "1380843184", Type = "Wins" },
+	{ Name = "500 Wins", Value = 500, ProductId = "1380843287", Type = "Wins" },
+	{ Name = "1000 Wins", Value = 1000, ProductId = "1380843400", Type = "Wins" },
 
 	-----FartPower Table-----
-	{ Name = "100 FartPower", Value = 100, ProductId = "1380845985", Type = "FartPower" },
-	{ Name = "1000 FartPower", Value = 1000, ProductId = "1380846081", Type = "FartPower" },
-	{ Name = "5000 FartPower", Value = 5000, ProductId = "1380846326", Type = "FartPower" },
+	{ Name = "100 FartPower", Value = 100, ProductId = "1380847270", Type = "FartPower" },
+	{ Name = "1000 FartPower", Value = 1000, ProductId = "1380847336", Type = "FartPower" },
+	{ Name = "5000 FartPower", Value = 5000, ProductId = "1380847419", Type = "FartPower" },
 
 	----+ 1 FartPower Every Seconds Table------
-	{ Name = "1 FartIncrease", Value = 1, ProductId = "1380843816", Type = "FartIncrease" },
-	{ Name = "10 FartIncrease", Value = 10, ProductId = "1380844143", Type = "FartIncrease" },
+	{ Name = "1 FartIncrease", Value = 1, ProductId = "1380843882", Type = "FartIncrease" },
+	{ Name = "10 FartIncrease", Value = 10, ProductId = "1380843976", Type = "FartIncrease" },
 
 	----Nuke Table-----
-	{ Name = "Nuke", ProductId = "1380844202", Type = "Nuke" },
+	{ Name = "Nuke", ProductId = "1380844242", Type = "Nuke" },
 }
 
 -----**Function To Get ProductId by Name-----
