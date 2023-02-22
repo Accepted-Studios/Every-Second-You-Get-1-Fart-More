@@ -16,7 +16,7 @@ local isNuking = NukeFolder:WaitForChild("IsNuking")
 -----**Process Receipt Function When Player Purchases DevProduct**-----
 MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 	local ProductId = ReceiptInfo.ProductId
-	local Player = Players:GetPlayerFromUserId(ReceiptInfo.PlayerId)
+	local Player = Players:GetPlayerByUserId(ReceiptInfo.PlayerId)
 	local ProductInfoTable = DevProducts:GetProductInfoTableByProductId(ProductId)
 	if ProductInfoTable then
 		-- If ProductInfoTable.Type is Wins
