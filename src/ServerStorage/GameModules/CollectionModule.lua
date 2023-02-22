@@ -55,9 +55,10 @@ function CollectionModule:Touch(ProductId)
 end
 
 -----**Give Wins Function**-----
-function CollectionModule:GiveWins(Spawn)
+function CollectionModule:GiveWins()
 	local debounce = false
 	local Wins = self.Object.Amount.Value
+	local Location = self.Object.Location.Value
 	self.Object.Touched:Connect(function(Hit)
 		if Hit.Parent:FindFirstChild("Humanoid") then
 			if not debounce then
@@ -67,8 +68,16 @@ function CollectionModule:GiveWins(Spawn)
 					local leaderstats = Player:WaitForChild("leaderstats")
 					leaderstats.Wins.Value = leaderstats.Wins.Value + Wins
 
-					----Teleport Player To Spawn----
-					Player.Character.HumanoidRootPart:PivotTo(Spawn.CFrame)
+					----Teleport Player To Spawn in CollectionService "TeleportArea"----
+					for index, Object in pairs(CollectionService:GetTagged("TeleportAreas")) do
+						if Object.Name == Location then
+							Player.Character.HumanoidRootPart:PivotTo(Object.CFrame)
+						end
+					end
+
+					-----Reset Player's FartPower ----
+					local FartPower = Player:WaitForChild("leaderstats"):WaitForChild("FartPower")
+					FartPower.Value = 0
 				end
 				debounce = false
 			end
