@@ -12,6 +12,12 @@
 
       "Packages":{
         "$path": "Packages"
+      },
+
+      "Monetization":
+      {
+        "$className": "Folder",
+        "$path": "src/ReplicatedStorage/Monetization"
       }
       
     },
@@ -28,7 +34,13 @@
       {
         "$className": "Folder",
         "$path": "src/ServerScriptService/Events"
+      },
+      "MonetizationHandler":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService/MonetizationHandler"
       }
+     
     },
 
     "ServerStorage":{
@@ -37,6 +49,10 @@
       "DatastoreModules":{
         "$className": "Folder",
         "$path": "src/ServerStorage/DatastoreModules"
+      },
+      "GameModules":{
+        "$className": "Folder",
+        "$path": "src/ServerStorage/GameModules"
       }
 
     },
@@ -60,10 +76,10 @@
     "StarterGui":{
       "$className": "StarterGui",
       "$ignoreUnknownInstances": true,
-      "MainUIScripts":{
+      "PlayerGuiScripts":{
         "$className": "Folder",
         "$ignoreUnknownInstances": true,
-        "$path": "src/StarterGui/MainUIScripts"
+        "$path": "src/StarterGui/PlayerGuiScripts"
       }
     }
     

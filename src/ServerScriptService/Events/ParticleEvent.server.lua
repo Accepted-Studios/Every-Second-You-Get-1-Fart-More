@@ -15,17 +15,20 @@ ParticleEvent.OnServerEvent:Connect(function(player, State)
 	local HumanoidRootPart = character:WaitForChild("HumanoidRootPart") or character.PrimaryPart
 
 	if State == "Jump" then
-		local FartGasClone = FartGas:Clone()
-		FartGasClone.Parent = HumanoidRootPart
+		if not HumanoidRootPart:FindFirstChild("FartGas") then
+			local FartGasClone = FartGas:Clone()
+			FartGasClone.Parent = HumanoidRootPart
+		end
 	elseif State == "Land" then
-		local FartGas = HumanoidRootPart:FindFirstChild("FartGas")
-		if not FartGas then
+		local NewFartGas = HumanoidRootPart:FindFirstChild("FartGas")
+		if not NewFartGas then
 			return
 		end
 		if not table.find(PlayerDebounce, player) then --- If player is not in debounce table, add them to the table and wait for cooldown
 			table.insert(PlayerDebounce, player)
 			task.wait(Cooldown)
-			FartGas:Destroy()
+			table.remove(PlayerDebounce, table.find(PlayerDebounce, player))
+			NewFartGas:Destroy()
 		end
 	end
 end)

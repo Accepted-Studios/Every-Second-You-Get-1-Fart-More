@@ -1,5 +1,13 @@
 -----Services----------
 local Players = game:GetService("Players")
+local MarketplaceService = game:GetService("MarketplaceService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+--------Gamepass Variables----------
+local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
+local GamepassesModule = require(MonetisationFolder.Gamepasses)
+local OwnsX2Wins = false
+local OwnsX2FartPower = false
 
 -----Functions-----
 ---*Function To Update Player JumpPower*---
@@ -8,7 +16,13 @@ local function UpdateJumpPower(humanoid: Humanoid, FartPower: IntValue)
 end
 
 ---*Function To Add JumpPower*---
-local function AddJumpPower(player: Player, FartPower: IntValue, FartRebirths: IntValue, FartIncrease: IntValue)
+local function AddJumpPower(
+	player: Player,
+	FartPower: IntValue,
+	FartRebirths: IntValue,
+	FartIncrease: IntValue,
+	Wins: IntValue
+)
 	task.spawn(function()
 		while task.wait(1) do
 			--If player is premium, add 2 to JumpPower, else add 1----
@@ -26,6 +40,16 @@ local function AddJumpPower(player: Player, FartPower: IntValue, FartRebirths: I
 			---Add FartIncrease to JumpPower if FartIncrease is Greater than 0---
 			if FartIncrease.Value > 0 then
 				FartPower.Value = FartPower.Value + FartIncrease.Value
+			end
+
+			-----Check if Player Owns x2 Fart Power------
+			if OwnsX2FartPower then
+				FartPower.Value = FartPower.Value * 1 + 2
+			end
+
+			-----Check if Player Owns x2 Wins------
+			if OwnsX2Wins then
+				Wins.Value = Wins.Value * 1 + 2
 			end
 		end
 	end)
@@ -47,7 +71,7 @@ Players.PlayerAdded:Connect(function(player)
 	Wins.Value = 0
 	Wins.Parent = leaderstats
 
-	local FartRebirths = Instance.new("IntValue")
+	local FartRebirths = Instance.new("NumberValue")
 	FartRebirths.Name = "FartRebirths"
 	FartRebirths.Value = 0
 	FartRebirths.Parent = leaderstats
@@ -57,8 +81,10 @@ Players.PlayerAdded:Connect(function(player)
 	FartIncrease.Value = 0
 	FartIncrease.Parent = player
 
-	AddJumpPower(player, FartPower, FartRebirths, FartIncrease)
+	-----**Add JumpPower To Player's Humanoid**-----
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins)
 
+	-----**Detects When Character Is Added**-----
 	player.CharacterAdded:Connect(function(character)
 		local humanoid = character:WaitForChild("Humanoid")
 		if not humanoid then
@@ -71,4 +97,8 @@ Players.PlayerAdded:Connect(function(player)
 			UpdateJumpPower(humanoid, FartPower)
 		end)
 	end)
+
+	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
+	OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
+	OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
 end)
