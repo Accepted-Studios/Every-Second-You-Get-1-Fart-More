@@ -18,15 +18,15 @@ local Gamepasses = {}
 Gamepasses.__index = Gamepasses
 
 Gamepasses.GamepassesTable = {
-	{ Name = "x2 FartPower", GamepassId = "140359400", Type = "x2 FartPower" },
-	{ Name = "x2 Wins", GamepassId = "140359578", Type = "x2 Wins" },
+	{ Name = "x2 FartPower", GamepassId = "140359291", Type = "x2 FartPower" },
+	{ Name = "x2 Wins", GamepassId = "140359251", Type = "x2 Wins" },
 }
 
 -----**Function To Get GamepassId by Name-----
 function Gamepasses:GetGamepassId(GamepassName)
 	for i, Gamepass in pairs(self.GamepassesTable) do --- Loop through GamepassesTable
 		if CompareWords(Gamepass.Name, GamepassName) then --- If GamepassName is the same as Gamepass.Name
-			return Gamepass.GamepassId --- Return GamepassId
+			return tonumber(Gamepass.GamepassId) --- Return GamepassId
 		end
 	end
 end

@@ -16,8 +16,13 @@ local isNuking = NukeFolder:WaitForChild("IsNuking")
 -----**Process Receipt Function When Player Purchases DevProduct**-----
 MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 	local ProductId = ReceiptInfo.ProductId
-	local Player = Players:GetPlayerFromUserId(ReceiptInfo.PlayerId)
+	local Player = Players:GetPlayerByUserId(ReceiptInfo.PlayerId)
+	if not Player then
+		return Enum.ProductPurchaseDecision.NotProcessedYet
+	end
+
 	local ProductInfoTable = DevProducts:GetProductInfoTableByProductId(ProductId)
+
 	if ProductInfoTable then
 		-- If ProductInfoTable.Type is Wins
 		if ProductInfoTable.Type == "Wins" then
@@ -28,6 +33,7 @@ MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 			---If ProductInfoTable.Type is FartPower
 		elseif ProductInfoTable.Type == "FartPower" then
 			local FartPower = Player:WaitForChild("leaderstats"):WaitForChild("FartPower")
+
 			FartPower.Value = FartPower.Value + ProductInfoTable.Value
 			return Enum.ProductPurchaseDecision.PurchaseGranted
 
