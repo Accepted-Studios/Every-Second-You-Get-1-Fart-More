@@ -2,12 +2,17 @@
 local Players = game:GetService("Players")
 local MarketplaceService = game:GetService("MarketplaceService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 
 --------Gamepass Variables----------
 local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
 local GamepassesModule = require(MonetisationFolder.Gamepasses)
 local OwnsX2Wins = false
 local OwnsX2FartPower = false
+
+-------Datastore Variables------
+local DatastoreModulesFolder = ServerStorage:WaitForChild("DatastoreModules")
+local DataServiceModule = require(DatastoreModulesFolder.DataService)
 
 -----Functions-----
 ---*Function To Update Player JumpPower*---
@@ -56,7 +61,7 @@ local function AddJumpPower(
 end
 
 -----** Main Function To Run When Player Joins **-----
-Players.PlayerAdded:Connect(function(player)
+local function PlayerJoined(player)
 	local leaderstats = Instance.new("Folder")
 	leaderstats.Name = "leaderstats"
 	leaderstats.Parent = player
@@ -81,9 +86,6 @@ Players.PlayerAdded:Connect(function(player)
 	FartIncrease.Value = 0
 	FartIncrease.Parent = player
 
-	-----**Add JumpPower To Player's Humanoid**-----
-	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins)
-
 	-----**Detects When Character Is Added**-----
 	player.CharacterAdded:Connect(function(character)
 		local humanoid = character:WaitForChild("Humanoid")
@@ -98,7 +100,31 @@ Players.PlayerAdded:Connect(function(player)
 		end)
 	end)
 
+	-----**Load Data**-----
+	DataServiceModule.PlayerJoining(player)
+	------**Check For Data and Apply if So---------
+	DataServiceModule.LoadData(player)
+
+	-----**Add JumpPower To Player's Humanoid**-----
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins)
+
 	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
 	OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
 	OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
-end)
+end
+
+----**When Player Leaves The Game-------
+local function PlayerLeaving(player)
+	DataServiceModule.PlayerLeaving(player)
+end
+
+------**PlayerAdded Connects to PlayerJoin------
+Players.PlayerAdded:Connect(PlayerJoined)
+
+------Loops for Players in the Game-----
+for _, player in ipairs(Players:GetPlayers()) do
+	task.spawn(PlayerJoined(player))
+end
+
+------PlayersRemoving Connects to PlayerLeaving-----
+Players.PlayerRemoving:Connect(PlayerLeaving)
