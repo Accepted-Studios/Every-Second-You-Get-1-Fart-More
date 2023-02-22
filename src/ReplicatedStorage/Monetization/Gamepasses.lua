@@ -18,8 +18,8 @@ local Gamepasses = {}
 Gamepasses.__index = Gamepasses
 
 Gamepasses.GamepassesTable = {
-	{ Name = "x2 FartPower", GamepassId = "123456789", Type = "x2 FartPower" },
-	{ Name = "x2 Wins", GamepassId = "123456789", Type = "x2 Wins" },
+	{ Name = "x2 FartPower", GamepassId = "140359400", Type = "x2 FartPower" },
+	{ Name = "x2 Wins", GamepassId = "140359578", Type = "x2 Wins" },
 }
 
 -----**Function To Get GamepassId by Name-----
