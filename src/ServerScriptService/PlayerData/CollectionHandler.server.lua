@@ -5,7 +5,6 @@ local ServerStorage = game:GetService("ServerStorage")
 -------Variables--------
 local GameModules = ServerStorage:WaitForChild("GameModules")
 local CollectionModule = require(GameModules:WaitForChild("CollectionModule"))
-local Spawn = workspace:WaitForChild("SpawnLocation")
 
 -----------Functions-------
 ------**Check if Object is a WinPads or FartPads Tagged Object**------
@@ -25,5 +24,5 @@ end
 ----**Check if Object is a CollectWins Tagged Object Which Gives Player Wins**------
 for index, Object in pairs(CollectionService:GetTagged("CollectWins")) do
 	local CollectionObject = CollectionModule.new(Object)
-	CollectionObject:GiveWins(Spawn)
+	CollectionObject:GiveWins()
 end
