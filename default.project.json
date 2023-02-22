@@ -48,6 +48,7 @@
       "$ignoreUnknownInstances": true,
       "DatastoreModules":{
         "$className": "Folder",
+        "$ignoreUnknownInstances": true,
         "$path": "src/ServerStorage/DatastoreModules"
       },
       "GameModules":{
