@@ -33,7 +33,7 @@ MarketplaceService.ProcessReceipt = function(ReceiptInfo)
 			---If ProductInfoTable.Type is FartPower
 		elseif ProductInfoTable.Type == "FartPower" then
 			local FartPower = Player:WaitForChild("leaderstats"):WaitForChild("FartPower")
-			print(ProductInfoTable)
+
 			FartPower.Value = FartPower.Value + ProductInfoTable.Value
 			return Enum.ProductPurchaseDecision.PurchaseGranted
 
