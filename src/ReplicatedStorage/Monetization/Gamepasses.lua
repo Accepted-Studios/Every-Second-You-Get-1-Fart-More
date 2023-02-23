@@ -35,6 +35,7 @@ end
 function Gamepasses:CheckIfPlayerOwnsGamepass(player, GamepassName)
 	local GamepassId = self:GetGamepassId(GamepassName) --- Get GamepassId by Name
 	local hasPass, expiration = MarketplaceService:UserOwnsGamePassAsync(player.UserId, GamepassId) --- Check if player owns gamepass
+
 	if hasPass then --- If player owns gamepass
 		return true --- Return true
 	else
