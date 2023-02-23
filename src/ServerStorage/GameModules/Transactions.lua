@@ -34,7 +34,7 @@ MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, gamep
 	if purchased then
 		for i, GamepassValue in pairs(GamepassesModule.GamepassesTable) do
 			if GamepassValue.GamepassId == gamepassId then
-				if not GamepassesModule:CheckIfPlayerOwnsGamepass(player, GamepassValue.Name) then --Check if player owns gamepass
+				if GamepassesModule:CheckIfPlayerOwnsGamepass(player, GamepassValue.Name) == false then --Check if player owns gamepass
 					local leaderstats = player:WaitForChild("leaderstats")
 					if GamepassValue.Type == "x2 FartPower" then
 						local FartPower = leaderstats:WaitForChild("FartPower")

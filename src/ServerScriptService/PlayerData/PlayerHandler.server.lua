@@ -3,6 +3,10 @@ local Players = game:GetService("Players")
 local MarketplaceService = game:GetService("MarketplaceService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
+local RunService = game:GetService("RunService")
+
+-----Developer Variables-----
+local InStudio = RunService:IsStudio() -- Check if in studio
 
 --------Gamepass Variables----------
 local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
@@ -51,7 +55,7 @@ local function AddJumpPower(
 			if Wins.Value > 0 then
 				FartPower.Value = FartPower.Value + Wins.Value
 			end
-			-----Check if Player Owns x2 Fart Power------
+			---Check if Player Owns x2 Fart Power------
 			if OwnsX2FartPower then
 				FartPower.Value = FartPower.Value * 1 + 2
 			end
@@ -119,7 +123,9 @@ end
 
 ----**When Player Leaves The Game-------
 local function PlayerLeaving(player)
-	DataServiceModule.PlayerLeaving(player)
+	if not InStudio then --If not in studio, save data
+		DataServiceModule.SaveData(player)
+	end
 end
 
 ------**PlayerAdded Connects to PlayerJoin------

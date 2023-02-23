@@ -39,8 +39,12 @@
       {
         "$className": "Folder",
         "$path": "src/ServerScriptService/MonetizationHandler"
+      },
+      "Extra":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService/Extra"
       }
-     
     },
 
     "ServerStorage":{

@@ -12,6 +12,10 @@ local FartPower = Player:WaitForChild("leaderstats"):WaitForChild("FartPower")
 local Wins = Player:WaitForChild("leaderstats"):WaitForChild("Wins")
 
 -----Functions-----
+----**Show both FarPower and Wins Top Bars**----
+FartTopBar.TextLabel.Text = FartPower.Value
+WinTopBar.TextLabel.Text = Wins.Value
+
 --**Update Fart Power Top Bar----
 FartPower.Changed:Connect(function()
 	FartTopBar.TextLabel.Text = FartPower.Value
