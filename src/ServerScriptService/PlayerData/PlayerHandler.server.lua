@@ -11,8 +11,6 @@ local InStudio = RunService:IsStudio() -- Check if in studio
 --------Gamepass Variables----------
 local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
 local GamepassesModule = require(MonetisationFolder.Gamepasses)
-local OwnsX2Wins = false
-local OwnsX2FartPower = false
 
 -------Datastore Variables------
 local DatastoreModulesFolder = ServerStorage:WaitForChild("DatastoreModules")
@@ -30,7 +28,9 @@ local function AddJumpPower(
 	FartPower: IntValue,
 	FartRebirths: IntValue,
 	FartIncrease: IntValue,
-	Wins: IntValue
+	Wins: IntValue,
+	OwnsX2FartPower: BoolValue,
+	OwnsX2Wins: BoolValue
 )
 	task.spawn(function()
 		while task.wait(1) do
@@ -56,7 +56,7 @@ local function AddJumpPower(
 				FartPower.Value = FartPower.Value + Wins.Value
 			end
 			---Check if Player Owns x2 Fart Power------
-			if OwnsX2FartPower then
+			if OwnsX2FartPower.Value == true then
 				FartPower.Value = FartPower.Value * 1 + 2
 			end
 
@@ -113,12 +113,15 @@ local function PlayerJoined(player)
 	------**Check For Data and Apply if So---------
 	DataServiceModule.LoadData(player)
 
-	-----**Add JumpPower To Player's Humanoid**-----
-	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins)
-
 	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
+	local OwnsX2Wins = false
+	local OwnsX2FartPower = false
+
 	OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
 	OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
+
+	-----**Add JumpPower To Player's Humanoid**-----
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
 end
 
 ----**When Player Leaves The Game-------
