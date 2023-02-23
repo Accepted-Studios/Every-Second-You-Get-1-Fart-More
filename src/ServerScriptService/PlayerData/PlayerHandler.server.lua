@@ -56,7 +56,7 @@ local function AddJumpPower(
 				FartPower.Value = FartPower.Value + Wins.Value
 			end
 			---Check if Player Owns x2 Fart Power------
-			if OwnsX2FartPower.Value == true then
+			if OwnsX2FartPower == true then
 				FartPower.Value = FartPower.Value * 1 + 2
 			end
 
