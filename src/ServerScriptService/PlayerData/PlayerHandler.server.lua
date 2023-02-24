@@ -58,11 +58,33 @@ local function AddJumpPower(
 			FartPower.Value = FartPower.Value * 1 + 2
 		end
 
-		-----Check if Player Owns x2 Wins------
+		-- -- -----Check if Player Owns x2 Wins------
 		if OwnsX2Wins == true then
 			Wins.Value = Wins.Value * 1 + 2
 		end
 	end
+end
+
+local function UpdateOverHead(char, FartPower, Wins)
+	local OverHead = char:WaitForChild("OverHead")
+	OverHead.Adornee = char:WaitForChild("Head")
+	local Frame = OverHead:WaitForChild("Frame")
+	local FartPowerLabel = Frame:WaitForChild("FartPowerLabel")
+	local WinsLabel = Frame:WaitForChild("WinsLabel")
+
+	local function UpdateFartPower()
+		FartPowerLabel.Text = "FartPower: " .. FartPower.Value
+	end
+
+	local function UpdateWins()
+		WinsLabel.Text = "Wins: " .. Wins.Value
+	end
+
+	FartPower.Changed:Connect(UpdateFartPower)
+	Wins.Changed:Connect(UpdateWins)
+
+	UpdateFartPower()
+	UpdateWins()
 end
 
 -----** Main Function To Run When Player Joins **-----
@@ -91,8 +113,14 @@ local function PlayerJoined(player)
 	FartIncrease.Value = 0
 	FartIncrease.Parent = player
 
+	local Multiplier = Instance.new("IntValue")
+	Multiplier.Name = "Multiplier"
+	Multiplier.Value = 0
+	Multiplier.Parent = player
+
 	-----**Detects When Character Is Added**-----
 	player.CharacterAdded:Connect(function(character)
+		print("Character Added")
 		local humanoid = character:WaitForChild("Humanoid")
 		if not humanoid then
 			return warn("No Humanoid")
@@ -103,24 +131,21 @@ local function PlayerJoined(player)
 		FartPower.Changed:Connect(function()
 			UpdateJumpPower(humanoid, FartPower)
 		end)
+		UpdateOverHead(character, FartPower, Wins)
 	end)
 
 	-----**Load Data**-----
 	DataServiceModule.PlayerJoining(player)
-	------**Check For Data and Apply if So---------
-	local LoadData = DataServiceModule.LoadData(player)
 
-	if LoadData then
-		-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
-		local OwnsX2Wins = false
-		local OwnsX2FartPower = false
+	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
 
-		OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
-		OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
+	local OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
+	local OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
 
-		-----**Add JumpPower To Player's Humanoid**-----
-		AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
-	end
+	-----**Add JumpPower To Player's Humanoid**-----
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
+
+	-- end
 end
 
 ----**When Player Leaves The Game-------

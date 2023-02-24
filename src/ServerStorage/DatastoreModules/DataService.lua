@@ -1,7 +1,7 @@
 ---Services---
-local ServerStorage = game:GetService("ServerStorage")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 
 ---Functions---
 local ProfileTemplate = {
@@ -17,6 +17,7 @@ local ProfileTemplate = {
 -----Variables----
 local DatastoreModulesFolder = ServerStorage:WaitForChild("DatastoreModules")
 local ProfileService = require(DatastoreModulesFolder:WaitForChild("ProfileService"))
+local PetDataFolder = ServerStorage:WaitForChild("PetData")
 
 ----ProfileService Variables----
 ----The official datastore is "OfficialAccepted"
@@ -76,6 +77,7 @@ function module.PlayerJoining(player)
 
 		if player:IsDescendantOf(Players) == true then
 			Profiles[player] = playerprofile
+			module.LoadData(player)
 		else
 			playerprofile:Release()
 		end
@@ -110,52 +112,52 @@ function module.SaveData(player)
 	profile.Data.FartPower = FartPower.Value
 
 	------Save Pets Area------------------------
-	-- local Pets = player.Pets
-	-- local Data = player.Data
+	local Pets = player.Pets
+	local Data = player.Data
 
-	-- local PetData = {}
-	-- local PlayerData = {}
+	local PetData = {}
+	local PlayerData = {}
 
-	-- for i, PetObject in pairs(Pets:GetChildren()) do
-	-- 	PetData[#PetData + 1] = {
+	for i, PetObject in pairs(Pets:GetChildren()) do
+		PetData[#PetData + 1] = {
 
-	-- 		Name = PetObject.Name,
-	-- 		TotalXP = PetObject.TotalXP.Value,
-	-- 		Equipped = PetObject.Equipped.Value,
-	-- 		PetID = PetObject.PetID.Value,
-	-- 		Multiplier1 = PetObject.Multiplier1.Value,
-	-- 		Multiplier2 = PetObject.Multiplier2.Value,
-	-- 		Type = PetObject.Type.Value,
-	-- 	}
-	-- end
+			Name = PetObject.Name,
+			TotalXP = PetObject.TotalXP.Value,
+			Equipped = PetObject.Equipped.Value,
+			PetID = PetObject.PetID.Value,
+			Multiplier1 = PetObject.Multiplier1.Value,
+			Multiplier2 = PetObject.Multiplier2.Value,
+			Type = PetObject.Type.Value,
+		}
+	end
 
-	-- for i, DataValue in pairs(Data:GetChildren()) do
-	-- 	PlayerData[#PlayerData + 1] = {
+	for i, DataValue in pairs(Data:GetChildren()) do
+		PlayerData[#PlayerData + 1] = {
 
-	-- 		Name = DataValue.Name,
-	-- 		ClassName = DataValue.ClassName,
-	-- 		Value = DataValue.Value,
-	-- 	}
-	-- end
+			Name = DataValue.Name,
+			ClassName = DataValue.ClassName,
+			Value = DataValue.Value,
+		}
+	end
 
-	-- profile.Data.PetTable.PetData = PetData --- Saves the Pet Data
-	-- profile.Data.PetTable.PlayerData = PlayerData --- Saves the Player Data
+	profile.Data.PetTable.PetData = PetData --- Saves the Pet Data
+	profile.Data.PetTable.PlayerData = PlayerData --- Saves the Player Data
 end
 
 -----Module For Loading the Data Saved------
 function module.LoadData(player)
 	local profileplayer = Profiles[player]
 
-	-- local Pets = Instance.new("Folder")
-	-- Pets.Name = "Pets"
-	-- Pets.Parent = player
+	local Pets = Instance.new("Folder")
+	Pets.Name = "Pets"
+	Pets.Parent = player
 
-	-- local Data = Instance.new("Folder")
-	-- Data.Name = "Data"
-	-- Data.Parent = player
+	local Data = Instance.new("Folder")
+	Data.Name = "Data"
+	Data.Parent = player
 
-	-- local DataTemplate = script.Parent.PetData.Data
-	-- local PetsTemplate = script.Parent.PetData.Pets
+	local DataTemplate = PetDataFolder.Data
+	local PetsTemplate = PetDataFolder.Pets
 
 	if profileplayer ~= nil then
 		-----Load Leaderstats Values-----
@@ -170,65 +172,65 @@ function module.LoadData(player)
 
 		-----Load Pets Data---------
 
-		-- 	local PetData = profileplayer.Data.PetTable.PetData
-		-- 	local PlayerData = profileplayer.Data.PetTable.PlayerData
+		local PetData = profileplayer.Data.PetTable.PetData
+		local PlayerData = profileplayer.Data.PetTable.PlayerData
 
-		-- 	if PetData ~= nil then
-		-- 		for i, v in pairs(PetData) do
-		-- 			local PetObject = ReplicatedStorage.Pets.PetFolderTemplate:Clone()
-		-- 			local Settings = ReplicatedStorage.Pets.Models:FindFirstChild(v.Name).Settings
-		-- 			local TypeNumber = ReplicatedStorage.Pets.CraftingTiers:FindFirstChild(v.Type).Value
-		-- 			local Level = getLevel(v.TotalXP)
+		if PetData ~= nil then
+			for i, v in pairs(PetData) do
+				local PetObject = ReplicatedStorage.Pets.PetFolderTemplate:Clone()
+				local Settings = ReplicatedStorage.Pets.Models:FindFirstChild(v.Name).Settings
+				local TypeNumber = ReplicatedStorage.Pets.CraftingTiers:FindFirstChild(v.Type).Value
+				local Level = getLevel(v.TotalXP)
 
-		-- 			PetObject.Name = v.Name
-		-- 			PetObject.Equipped.Value = v.Equipped
-		-- 			PetObject.TotalXP.Value = v.TotalXP
-		-- 			PetObject.Multiplier1.Value = Settings.Multiplier1.Value
-		-- 					* (ReplicatedStorage.Pets.Settings.CraftMultiplier.Value ^ TypeNumber)
-		-- 				+ (Settings.LevelIncrement.Value * Level)
-		-- 			PetObject.Multiplier2.Value = Settings.Multiplier2.Value
-		-- 					* (ReplicatedStorage.Pets.Settings.CraftMultiplier.Value ^ TypeNumber)
-		-- 				+ (Settings.LevelIncrement.Value * Level)
-		-- 			PetObject.PetID.Value = v.PetID
-		-- 			PetObject.Type.Value = v.Type
-		-- 			PetObject.Parent = Pets
-		-- 		end
-		-- 	end
+				PetObject.Name = v.Name
+				PetObject.Equipped.Value = v.Equipped
+				PetObject.TotalXP.Value = v.TotalXP
+				PetObject.Multiplier1.Value = Settings.Multiplier1.Value
+						* (ReplicatedStorage.Pets.Settings.CraftMultiplier.Value ^ TypeNumber)
+					+ (Settings.LevelIncrement.Value * Level)
+				PetObject.Multiplier2.Value = Settings.Multiplier2.Value
+						* (ReplicatedStorage.Pets.Settings.CraftMultiplier.Value ^ TypeNumber)
+					+ (Settings.LevelIncrement.Value * Level)
+				PetObject.PetID.Value = v.PetID
+				PetObject.Type.Value = v.Type
+				PetObject.Parent = Pets
+			end
+		end
 
-		-- 	for i, v in pairs(DataTemplate:GetChildren()) do
-		-- 		local DataValue = v:Clone()
-		-- 		local DataTable = nil
+		for i, v in pairs(DataTemplate:GetChildren()) do
+			local DataValue = v:Clone()
+			local DataTable = nil
 
-		-- 		DataValue.Parent = Data
+			DataValue.Parent = Data
 
-		-- 		if PlayerData ~= nil then
-		-- 			for i, v in pairs(PlayerData) do
-		-- 				if v.Name == DataValue.Name then
-		-- 					DataTable = v
-		-- 				end
-		-- 			end
-		-- 		end
+			if PlayerData ~= nil then
+				for i, v in pairs(PlayerData) do
+					if v.Name == DataValue.Name then
+						DataTable = v
+					end
+				end
+			end
 
-		-- 		if DataTable ~= nil then
-		-- 			if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
-		-- 				DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
-		-- 			else
-		-- 				DataValue.Value = DataTable.Value
-		-- 			end
-		-- 		else
-		-- 			if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
-		-- 				DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
-		-- 			end
-		-- 		end
-		-- 	end
-		-- else
-		-- 	for i, v in pairs(DataTemplate:GetChildren()) do
-		-- 		local DataValue = v:Clone()
-		-- 		DataValue.Parent = Data
-		-- 		if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
-		-- 			DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
-		-- 		end
-		-- 	end
+			if DataTable ~= nil then
+				if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
+					DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
+				else
+					DataValue.Value = DataTable.Value
+				end
+			else
+				if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
+					DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
+				end
+			end
+		end
+	else
+		for i, v in pairs(DataTemplate:GetChildren()) do
+			local DataValue = v:Clone()
+			DataValue.Parent = Data
+			if DataValue.Name == "MaxStorage" or v.Name == "MaxEquipped" then
+				DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
+			end
+		end
 		return true
 	end
 end
