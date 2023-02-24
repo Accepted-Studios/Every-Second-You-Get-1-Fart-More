@@ -1,6 +1,5 @@
 -----Services----------
 local Players = game:GetService("Players")
-local MarketplaceService = game:GetService("MarketplaceService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 local RunService = game:GetService("RunService")
@@ -55,12 +54,12 @@ local function AddJumpPower(
 			FartPower.Value = FartPower.Value + Wins.Value
 		end
 		---Check if Player Owns x2 Fart Power------
-		if OwnsX2FartPower then
+		if OwnsX2FartPower == true then
 			FartPower.Value = FartPower.Value * 1 + 2
 		end
 
 		-----Check if Player Owns x2 Wins------
-		if OwnsX2Wins then
+		if OwnsX2Wins == true then
 			Wins.Value = Wins.Value * 1 + 2
 		end
 	end
@@ -109,24 +108,24 @@ local function PlayerJoined(player)
 	-----**Load Data**-----
 	DataServiceModule.PlayerJoining(player)
 	------**Check For Data and Apply if So---------
-	DataServiceModule.LoadData(player)
+	local LoadData = DataServiceModule.LoadData(player)
 
-	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
-	local OwnsX2Wins = false
-	local OwnsX2FartPower = false
+	if LoadData then
+		-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
+		local OwnsX2Wins = false
+		local OwnsX2FartPower = false
 
-	OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
-	OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
+		OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
+		OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
 
-	-----**Add JumpPower To Player's Humanoid**-----
-	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
+		-----**Add JumpPower To Player's Humanoid**-----
+		AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
+	end
 end
 
 ----**When Player Leaves The Game-------
 local function PlayerLeaving(player)
-	if not InStudio then --If not in studio, save data
-		DataServiceModule.SaveData(player)
-	end
+	DataServiceModule.SaveData(player)
 end
 
 ------**PlayerAdded Connects to PlayerJoin------

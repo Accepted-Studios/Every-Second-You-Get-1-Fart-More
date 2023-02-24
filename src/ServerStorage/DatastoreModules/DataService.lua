@@ -229,6 +229,7 @@ function module.LoadData(player)
 		-- 			DataValue.Value = ReplicatedStorage.Pets.Settings:FindFirstChild("Default" .. DataValue.Name).Value
 		-- 		end
 		-- 	end
+		return true
 	end
 end
 
