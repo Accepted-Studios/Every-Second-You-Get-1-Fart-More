@@ -43,6 +43,101 @@ function getLevel(totalXP)
 	end
 end
 
+---*Function To Add JumpPower*---
+local function AddJumpPower(
+	player: Player,
+	FartPower: IntValue,
+	FartRebirths: NumberValue,
+	FartIncrease: IntValue,
+	Wins: IntValue,
+	OwnsX2Wins,
+	OwnsX2FartPower
+)
+	task.spawn(function()
+		while task.wait(1) do
+			--If player is premium, add 2 to JumpPower, else add 1----
+			if player.MembershipType == Enum.MembershipType.Premium then
+				FartPower.Value = FartPower.Value + 2
+			else
+				FartPower.Value = FartPower.Value + 1
+			end
+
+			---Add FartRebirths to JumpPower if FartRebirths is Greater than 0---
+			if FartRebirths.Value > 0 then
+				FartPower.Value = FartPower.Value + FartRebirths.Value
+			end
+
+			---Add FartIncrease to JumpPower if FartIncrease is Greater than 0---
+			if FartIncrease.Value > 0 then
+				FartPower.Value = FartPower.Value + FartIncrease.Value
+			end
+
+			-----Add Wins to JumpPower if Wins is Greater than 0-----
+			if Wins.Value > 0 then
+				FartPower.Value = FartPower.Value + Wins.Value
+			end
+			---Check if Player Owns x2 Fart Power------
+			if OwnsX2FartPower == true then
+				FartPower.Value = FartPower.Value * 1 + 2
+			end
+
+			-- -- -- -----Check if Player Owns x2 Wins------
+			if OwnsX2Wins == true then
+				Wins.Value = Wins.Value * 1 + 2
+			end
+		end
+	end)
+end
+
+---*Function To Update Player JumpPower*---
+local function UpdateJumpPower(humanoid: Humanoid, FartPower: IntValue)
+	humanoid.JumpPower = FartPower.Value
+end
+
+local function UpdateOverHead(char, FartPower, Wins)
+	local OverHead = char:WaitForChild("OverHead")
+	OverHead.Adornee = char:WaitForChild("Head")
+	local Frame = OverHead:WaitForChild("Frame")
+	local FartPowerLabel = Frame:WaitForChild("FartPowerLabel")
+	local WinsLabel = Frame:WaitForChild("WinsLabel")
+
+	local function UpdateFartPower()
+		FartPowerLabel.Text = "FartPower: " .. FartPower.Value
+	end
+
+	local function UpdateWins()
+		WinsLabel.Text = "Wins: " .. Wins.Value
+	end
+
+	FartPower.Changed:Connect(UpdateFartPower)
+	Wins.Changed:Connect(UpdateWins)
+
+	UpdateFartPower()
+	UpdateWins()
+end
+
+local function onCharacterAdded(player, character)
+	print("Character Added")
+	local FartPower = player:WaitForChild("leaderstats"):WaitForChild("FartPower")
+	local Wins = player:WaitForChild("leaderstats"):WaitForChild("Wins")
+
+	local humanoid = character:WaitForChild("Humanoid")
+	if not humanoid then
+		return warn("No Humanoid")
+	end
+
+	-----*Whenever a character respwns, Update JumpPower*--
+	UpdateJumpPower(humanoid, FartPower)
+	FartPower.Changed:Connect(function()
+		UpdateJumpPower(humanoid, FartPower)
+	end)
+	UpdateOverHead(character, FartPower, Wins)
+end
+
+----Variables---
+local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
+local GamepassesModule = require(MonetisationFolder.Gamepasses)
+
 ---Modules---
 local module = {}
 
@@ -81,8 +176,15 @@ function module.PlayerJoining(player)
 		else
 			playerprofile:Release()
 		end
-	else
-		player:Kick("Sorry, can't find your data, PlayerAdded_1")
+
+		player.CharacterAdded:Connect(function(character)
+			onCharacterAdded(player, character)
+		end)
+		if player.Character then
+			onCharacterAdded(player, player.Character)
+		else
+			player:Kick("Sorry, can't find your data, PlayerAdded_1")
+		end
 	end
 end
 
@@ -112,8 +214,8 @@ function module.SaveData(player)
 	profile.Data.FartPower = FartPower.Value
 
 	------Save Pets Area------------------------
-	local Pets = player.Pets
-	local Data = player.Data
+	local Pets = player:WaitForChild("Pets")
+	local Data = player:WaitForChild("Data")
 
 	local PetData = {}
 	local PlayerData = {}
@@ -148,6 +250,46 @@ end
 function module.LoadData(player)
 	local profileplayer = Profiles[player]
 
+	local leaderstats = Instance.new("Folder")
+	leaderstats.Name = "leaderstats"
+	leaderstats.Parent = player
+
+	local FartPower = Instance.new("IntValue")
+	FartPower.Name = "FartPower"
+	FartPower.Value = profileplayer.Data.FartPower
+	FartPower.Parent = leaderstats
+
+	local Wins = Instance.new("IntValue")
+	Wins.Name = "Wins"
+	Wins.Value = profileplayer.Data.Wins
+	Wins.Parent = leaderstats
+
+	local FartRebirths = Instance.new("NumberValue")
+	FartRebirths.Name = "FartRebirths"
+	FartRebirths.Value = profileplayer.Data.FartRebirths
+	FartRebirths.Parent = leaderstats
+
+	local FartIncrease = Instance.new("IntValue")
+	FartIncrease.Name = "FartIncrease"
+	FartIncrease.Value = 0
+	FartIncrease.Parent = player
+
+	local Multiplier = Instance.new("IntValue")
+	Multiplier.Name = "Multiplier"
+	Multiplier.Value = 0
+	Multiplier.Parent = player
+
+	local OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
+	local OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
+
+	-----**Add JumpPower To Player's Humanoid**-----
+	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
+
+	-----**Detects When Character Is Added**-----
+	-- player.CharacterAdded:Connect(function(character)
+
+	-- end)
+
 	local Pets = Instance.new("Folder")
 	Pets.Name = "Pets"
 	Pets.Parent = player
@@ -160,16 +302,6 @@ function module.LoadData(player)
 	local PetsTemplate = PetDataFolder.Pets
 
 	if profileplayer ~= nil then
-		-----Load Leaderstats Values-----
-		local leaderstats = player:WaitForChild("leaderstats")
-		local Wins = leaderstats:WaitForChild("Wins")
-		local FartRebirths = leaderstats:WaitForChild("FartRebirths")
-		local FartPower = leaderstats:WaitForChild("FartPower")
-
-		Wins.Value = profileplayer.Data.Wins
-		FartRebirths.Value = profileplayer.Data.FartRebirths
-		FartPower.Value = profileplayer.Data.FartPower
-
 		-----Load Pets Data---------
 
 		local PetData = profileplayer.Data.PetTable.PetData

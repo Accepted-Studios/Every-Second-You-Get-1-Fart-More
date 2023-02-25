@@ -1,11 +1,10 @@
 -------Services----------
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 ------Variables------
-local Player = Players.LocalPlayer
-local character = Player.Character or Player.CharacterAdded:Wait()
-local PlayerGui = Player:WaitForChild("PlayerGui")
+-- local Player = Players.LocalPlayer
+local character = script.Parent
+-- local PlayerGui = Player:WaitForChild("PlayerGui")
 
 -----Debounces and Events-----
 local isJumping = false
@@ -18,6 +17,7 @@ local function onStateChanged(_oldState, newState)
 	if newState == Enum.HumanoidStateType.Jumping then
 		if not isJumping then
 			isJumping = true
+
 			ParticleEvent:FireServer("Jump")
 		end
 	elseif newState == Enum.HumanoidStateType.Landed then
