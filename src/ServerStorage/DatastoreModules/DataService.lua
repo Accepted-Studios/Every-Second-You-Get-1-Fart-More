@@ -182,8 +182,6 @@ function module.PlayerJoining(player)
 		end)
 		if player.Character then
 			onCharacterAdded(player, player.Character)
-		else
-			player:Kick("Sorry, can't find your data, PlayerAdded_1")
 		end
 	end
 end
