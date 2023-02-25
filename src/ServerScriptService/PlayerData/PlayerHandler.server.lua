@@ -25,44 +25,46 @@ end
 local function AddJumpPower(
 	player: Player,
 	FartPower: IntValue,
-	FartRebirths: IntValue,
+	FartRebirths: NumberValue,
 	FartIncrease: IntValue,
 	Wins: IntValue,
-	OwnsX2FartPower: BoolValue,
-	OwnsX2Wins: BoolValue
+	OwnsX2Wins: Boolean,
+	OwnsX2FartPower: Boolean
 )
-	while task.wait(1) do
-		--If player is premium, add 2 to JumpPower, else add 1----
-		if player.MembershipType == Enum.MembershipType.Premium then
-			FartPower.Value = FartPower.Value + 2
-		else
-			FartPower.Value = FartPower.Value + 1
-		end
+	task.spawn(function()
+		while task.wait(1) do
+			--If player is premium, add 2 to JumpPower, else add 1----
+			if player.MembershipType == Enum.MembershipType.Premium then
+				FartPower.Value = FartPower.Value + 2
+			else
+				FartPower.Value = FartPower.Value + 1
+			end
 
-		---Add FartRebirths to JumpPower if FartRebirths is Greater than 0---
-		if FartRebirths.Value > 0 then
-			FartPower.Value = FartPower.Value + FartRebirths.Value
-		end
+			---Add FartRebirths to JumpPower if FartRebirths is Greater than 0---
+			if FartRebirths.Value > 0 then
+				FartPower.Value = FartPower.Value + FartRebirths.Value
+			end
 
-		---Add FartIncrease to JumpPower if FartIncrease is Greater than 0---
-		if FartIncrease.Value > 0 then
-			FartPower.Value = FartPower.Value + FartIncrease.Value
-		end
+			---Add FartIncrease to JumpPower if FartIncrease is Greater than 0---
+			if FartIncrease.Value > 0 then
+				FartPower.Value = FartPower.Value + FartIncrease.Value
+			end
 
-		-----Add Wins to JumpPower if Wins is Greater than 0-----
-		if Wins.Value > 0 then
-			FartPower.Value = FartPower.Value + Wins.Value
-		end
-		---Check if Player Owns x2 Fart Power------
-		if OwnsX2FartPower == true then
-			FartPower.Value = FartPower.Value * 1 + 2
-		end
+			-----Add Wins to JumpPower if Wins is Greater than 0-----
+			if Wins.Value > 0 then
+				FartPower.Value = FartPower.Value + Wins.Value
+			end
+			---Check if Player Owns x2 Fart Power------
+			if OwnsX2FartPower == true then
+				FartPower.Value = FartPower.Value * 1 + 2
+			end
 
-		-- -- -----Check if Player Owns x2 Wins------
-		if OwnsX2Wins == true then
-			Wins.Value = Wins.Value * 1 + 2
+			-- -- -- -----Check if Player Owns x2 Wins------
+			if OwnsX2Wins == true then
+				Wins.Value = Wins.Value * 1 + 2
+			end
 		end
-	end
+	end)
 end
 
 local function UpdateOverHead(char, FartPower, Wins)
@@ -158,7 +160,7 @@ Players.PlayerAdded:Connect(PlayerJoined)
 
 ------Loops for Players in the Game-----
 for _, player in ipairs(Players:GetPlayers()) do
-	task.spawn(PlayerJoined(player))
+	task.spawn(PlayerJoined, player)
 end
 
 ------PlayersRemoving Connects to PlayerLeaving-----
