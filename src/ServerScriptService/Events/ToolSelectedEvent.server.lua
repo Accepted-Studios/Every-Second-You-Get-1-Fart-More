@@ -21,7 +21,7 @@ ToolSelectedEvent.OnServerEvent:Connect(function(Player, ToolName, PriceValue)
 
 		if ToolName then
 			local ToolClone = Tool:Clone() -- Clones the tool.
-			ToolClone.Parent = Character -- Sets the parent of the tool clone to the player's character.
+			ToolClone.Parent = Player.Backpack -- Sets the parent of the tool clone to the player's backpack.
 		end
 	end
 end)
