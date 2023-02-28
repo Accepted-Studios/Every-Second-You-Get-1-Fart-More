@@ -5,9 +5,6 @@ local MarketplaceService = game:GetService("MarketplaceService")
 
 ---------Variables-------
 local Player = Players.LocalPlayer
-local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
-local GamepassesModule = require(MonetisationFolder.Gamepasses)
-
 local PlayerGui = Player:WaitForChild("PlayerGui")
 local ButtonsGui = PlayerGui:WaitForChild("ButtonsGui")
 local ButtonFrame = ButtonsGui:WaitForChild("ButtonFrame")
@@ -16,6 +13,9 @@ local TeleportButton = ButtonFrame:WaitForChild("Teleport")
 local X2WinsButton = ButtonFrame:WaitForChild("X2 Wins")
 local X2FartPowerButton = ButtonFrame:WaitForChild("X2 Fart Power")
 local PetsButton = ButtonFrame:WaitForChild("Pets")
+
+local RemotesFolder = ReplicatedStorage:WaitForChild("Remotes")
+local GetMonetizedFunction = RemotesFolder:WaitForChild("GetMonetized")
 
 ---------Functions----------
 ---**Open Rebirth Gui---
@@ -34,7 +34,7 @@ end)
 
 ----**Prompt Player To Buy X2 Wins----
 X2WinsButton.MouseButton1Click:Connect(function()
-	local GamepassId = GamepassesModule:GetGamepassId("x2 Wins")
+	local GamepassId = GetMonetizedFunction:InvokeServer("Gamepasses", "GetGamepassId", X2WinsButton.Name)
 	if not GamepassId then
 		warn("GamepassId not found for gamepass: " .. X2WinsButton.Name)
 		return
@@ -44,7 +44,7 @@ end)
 
 ----**Prompt Player To Buy X2 Fart Power----
 X2FartPowerButton.MouseButton1Click:Connect(function()
-	local GamepassId = GamepassesModule:GetGamepassId(X2FartPowerButton.Name)
+	local GamepassId = GetMonetizedFunction:InvokeServer("Gamepasses", "GetGamepassId", X2FartPowerButton.Name)
 	if not GamepassId then
 		warn("GamepassId not found for gamepass: " .. X2FartPowerButton.Name)
 		return

@@ -1,11 +1,12 @@
 --------Services------
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
 --------Variables------
-local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
+local MonetisationFolder = ServerStorage:WaitForChild("Monetization")
 local DevProducts = require(MonetisationFolder:WaitForChild("DevProducts"))
 
 ------Nuke Variables-----

@@ -24,7 +24,7 @@ local PetDataFolder = ServerStorage:WaitForChild("PetData")
 local GameProfileStore = ProfileService.GetProfileStore("OfficialAccepted", ProfileTemplate) --- Datastore Change name
 local Profiles = {}
 
-----Calculations To Calculate XP-----
+----**Calculations To Calculate XP-----
 function getLevel(totalXP)
 	local Increment = 0
 	local RequiredXP = 100
@@ -94,6 +94,7 @@ local function UpdateJumpPower(humanoid: Humanoid, FartPower: IntValue)
 	humanoid.JumpPower = FartPower.Value
 end
 
+-----**Function To Update OverHead**-----
 local function UpdateOverHead(char, FartPower, Wins)
 	local OverHead = char:WaitForChild("OverHead")
 	OverHead.Adornee = char:WaitForChild("Head")
@@ -116,6 +117,7 @@ local function UpdateOverHead(char, FartPower, Wins)
 	UpdateWins()
 end
 
+----**Function To Run When Character is Added**----
 local function onCharacterAdded(player, character)
 	print("Character Added")
 	local FartPower = player:WaitForChild("leaderstats"):WaitForChild("FartPower")
@@ -126,7 +128,7 @@ local function onCharacterAdded(player, character)
 		return warn("No Humanoid")
 	end
 
-	-----*Whenever a character respwns, Update JumpPower*--
+	-----Whenever a character respwns, Update JumpPower*--
 	UpdateJumpPower(humanoid, FartPower)
 	FartPower.Changed:Connect(function()
 		UpdateJumpPower(humanoid, FartPower)
@@ -135,13 +137,13 @@ local function onCharacterAdded(player, character)
 end
 
 ----Variables---
-local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
+local MonetisationFolder = ServerStorage:WaitForChild("Monetization")
 local GamepassesModule = require(MonetisationFolder.Gamepasses)
 
 ---Modules---
 local module = {}
 
-----_Allows ProfileService to be Accessed From Another Script-------
+-----**Allows ProfileService to be Accessed From Another Script**-------
 function module:GetPlayerProfile(player, Yield)
 	local profile = Profiles[player]
 
@@ -156,7 +158,7 @@ function module:GetPlayerProfile(player, Yield)
 	return profile
 end
 
-----Module for PlayerAdded-------
+----**Module for PlayerAdded**-------
 function module.PlayerJoining(player)
 	local playerprofile = GameProfileStore:LoadProfileAsync(tostring(player.UserId))
 
@@ -177,6 +179,7 @@ function module.PlayerJoining(player)
 			playerprofile:Release()
 		end
 
+		-----Detect When Character is Added----
 		player.CharacterAdded:Connect(function(character)
 			onCharacterAdded(player, character)
 		end)
@@ -186,7 +189,7 @@ function module.PlayerJoining(player)
 	end
 end
 
------Module For PlayerLeaving-----------
+-----**Module For PlayerLeaving**-----------
 function module.PlayerLeaving(player)
 	local playerprofile = Profiles[player]
 
@@ -197,7 +200,7 @@ function module.PlayerLeaving(player)
 	end
 end
 
------Module To Save Pets And Money------
+-----**Module To Save Pets And Money**------
 function module.SaveData(player)
 	local profile = Profiles[player]
 
@@ -244,10 +247,11 @@ function module.SaveData(player)
 	profile.Data.PetTable.PlayerData = PlayerData --- Saves the Player Data
 end
 
------Module For Loading the Data Saved------
+-----**Module For Loading the Data Saved**------
 function module.LoadData(player)
 	local profileplayer = Profiles[player]
 
+	------Load Leaderstats Area--------
 	local leaderstats = Instance.new("Folder")
 	leaderstats.Name = "leaderstats"
 	leaderstats.Parent = player
@@ -277,17 +281,14 @@ function module.LoadData(player)
 	Multiplier.Value = 0
 	Multiplier.Parent = player
 
+	-----**Check If Player Owns Gamepasses**-----
 	local OwnsX2Wins = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Wins")
 	local OwnsX2FartPower = GamepassesModule:CheckIfPlayerOwnsGamepass(player, "x2 Fart Power")
 
 	-----**Add JumpPower To Player's Humanoid**-----
 	AddJumpPower(player, FartPower, FartRebirths, FartIncrease, Wins, OwnsX2FartPower, OwnsX2Wins)
 
-	-----**Detects When Character Is Added**-----
-	-- player.CharacterAdded:Connect(function(character)
-
-	-- end)
-
+	------Load Pets Area------------------------
 	local Pets = Instance.new("Folder")
 	Pets.Name = "Pets"
 	Pets.Parent = player

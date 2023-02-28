@@ -46,7 +46,7 @@ end
 -----**Function To Get ProductInfo by ProductId-----
 function DevProducts:GetProductInfoTableByProductId(ProductId)
 	for i, Product in pairs(self.ProductsTable) do --- Loop through ProductsTable
-		if tonumber(Product.ProductId) == ProductId then --- If ProductId is the same as Product.ProductId
+		if tonumber(Product.ProductId) == tonumber(ProductId) then --- If ProductId is the same as Product.ProductId
 			return Product --- Return Product
 		end
 	end
@@ -60,4 +60,36 @@ function DevProducts:GetProductIdByTypeAndValue(Type, Value)
 		end
 	end
 end
+
+--------**Function to get the Nearest Product Id by type and value**-------
+function DevProducts:GetNearestProductIdByTypeAndValue(Type, PlayerValue, ProductValue)
+	local Difference = ProductValue - PlayerValue
+	local NearestProductId = nil
+	local NearestDifference = nil
+
+	-- Loop through ProductsTable
+	for i, Product in pairs(self.ProductsTable) do
+		-- Check if Product type is equal to the given type and value is greater than or equal to the difference
+
+		if Product.Type == Type and Product.Value >= Difference then
+			-- If NearestDifference is not set yet, set it
+			if NearestDifference == nil then
+				NearestDifference = Product.Value - Difference
+				NearestProductId = Product.ProductId
+
+			-- Else check if current product has a value closer to the difference
+			elseif Product.Value - Difference < NearestDifference then
+				NearestDifference = Product.Value - Difference
+				NearestProductId = Product.ProductId
+			end
+
+		-- Check if Product type is equal and value is smaller than difference and NearestDifference is not set yet so it returns the biggest prodcut value
+		elseif Product.Type == Type and Product.Value < Difference and NearestDifference == nil then
+			NearestProductId = Product.ProductId
+		end
+	end
+
+	return NearestProductId
+end
+
 return DevProducts

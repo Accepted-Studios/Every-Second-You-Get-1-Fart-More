@@ -12,12 +12,6 @@ local DataServiceModule = require(DatastoreModulesFolder.DataService)
 -----** Main Function To Run When Player Joins **-----
 local function PlayerJoined(player)
 	DataServiceModule.PlayerJoining(player)
-
-	-----**Load Data**-----
-
-	-----**Check If Player Owns x2 Wins Gamepass or Owns x2 FartPower or Both**-----
-
-	-- end
 end
 
 ----**When Player Leaves The Game-------

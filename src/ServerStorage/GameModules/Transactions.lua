@@ -1,9 +1,9 @@
 -----Services-----
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
 local MarketplaceService = game:GetService("MarketplaceService")
 
 -----Variables-----
-local MonetisationFolder = ReplicatedStorage:WaitForChild("Monetization")
+local MonetisationFolder = ServerStorage:WaitForChild("Monetization")
 local GamepassesModule = require(MonetisationFolder.Gamepasses)
 
 ----This is a funcion that can convert a percentage parameter to a number-----
