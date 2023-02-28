@@ -12,14 +12,9 @@
 
       "Packages":{
         "$path": "Packages"
-      },
-
-      "Monetization":
-      {
-        "$className": "Folder",
-        "$path": "src/ReplicatedStorage/Monetization"
       }
-      
+
+  
     },
 
     "ServerScriptService":{
@@ -35,11 +30,19 @@
         "$className": "Folder",
         "$path": "src/ServerScriptService/Events"
       },
+    
       "MonetizationHandler":
       {
         "$className": "Folder",
         "$path": "src/ServerScriptService/MonetizationHandler"
       },
+
+      "GameHandler":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerScriptService/GameHandler"
+      },
+
       "Extra":
       {
         "$className": "Folder",
@@ -55,6 +58,13 @@
         "$ignoreUnknownInstances": true,
         "$path": "src/ServerStorage/DatastoreModules"
       },
+
+      "Monetization":
+      {
+        "$className": "Folder",
+        "$path": "src/ServerStorage/Monetization"
+      },
+
       "GameModules":{
         "$className": "Folder",
         "$path": "src/ServerStorage/GameModules"
